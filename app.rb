@@ -25,10 +25,20 @@ end
 # Funciton can give unsesired result when number of teams doen't devide niecly. i.e. a,b,c,d. Maybe check with a mod?
 def order_per_team(input_array, per_team)
   array = input_array.dup
-  output = []
-  while array.length > 0 do
-    output << (0...per_team).map { array.delete_at(rand(array.length)) if array.length > 0}
+  # Creates the bulk of teams
+  output = (0...(array.length / per_team)).map do
+    (0...per_team).map {array.delete_at(rand(array.length))}
   end
+  #  Corral any stragglers into last array element
+  stragglers = []
+  stragglers = (0...array.length).map { array.delete_at(rand(array.length)) }
+  # binding.pry
+  if stragglers.length < per_team -1
+    output[0].concat(stragglers)
+  else
+    output << stragglers
+  end
+  raise "order_per_team failed to add all elements to the outputs" if array.length > 0
   output
 end
 
