@@ -1,7 +1,7 @@
 <form action="/team_picker" method="POST">
   <div>
     <label for="names">Names</label>
-    <textarea name="names"></textarea>
+    <textarea name="names"><%= session[:name_array].join(",") unless session[:name_array].nil? %></textarea>
   </div>
   <div>
     <label for="names">Method</label>
@@ -16,3 +16,7 @@
     <input type="submit" value="Submit">
   </div>
 </form>
+
+<div id=output>
+  <%= session[:teams_output] unless session[:teams_output].nil? %>
+</div>
